@@ -159,8 +159,9 @@
     can be found.
   -->
   <ItemGroup>
+    <Compile Include="Constants.cs" />
     <Compile Include="CustomTaskPane\CustomTaskPaneForm.cs">
-      <SubType>Form</SubType>
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="CustomTaskPane\CustomTaskPaneForm.Designer.cs">
       <DependentUpon>CustomTaskPaneForm.cs</DependentUpon>
@@ -208,6 +209,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Helpers\" />
+    <Folder Include="Services\" />
     <Folder Include="UserControls\" />
     <Folder Include="ViewModels\" />
   </ItemGroup>
