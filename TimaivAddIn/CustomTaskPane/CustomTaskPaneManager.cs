@@ -3,6 +3,9 @@ using System;
 using System.Linq;
 using static TimaivAddIn.Constants;
 using Office = Microsoft.Office.Core;
+using Outlook = Microsoft.Office.Interop.Outlook;
+using System.Diagnostics;
+using System.Runtime.InteropServices;
 
 namespace TimaivAddIn.CustomTaskPane
 {
@@ -21,21 +24,30 @@ namespace TimaivAddIn.CustomTaskPane
         private readonly List<PaneWrapper> wrappers = new List<PaneWrapper>();
         #endregion
 
-        #region Methods
+        #region Public Methods
         public void InitPane(object _window)
         {
             if (_window == null) throw new ArgumentNullException();
 
-            if (GetPane(_window) == null)
+            if (_window is Outlook.Inspector || _window is Outlook.Explorer)
             {
-                var pane = Globals.ThisAddIn.CustomTaskPanes.Add(new CustomTaskPaneForm(),
-                                                                 APP_NAME);
-                pane.Width = PANE_INITIAL_WIDTH;
-                pane.DockPosition = Office.MsoCTPDockPosition.msoCTPDockPositionRight;
-                pane.DockPositionRestrict = Office.MsoCTPDockPositionRestrict.msoCTPDockPositionRestrictNoChange;
-
-                PaneWrapper wrapper = new PaneWrapper(_window, pane);
+                if (GetPane(_window) == null)
+                {
+                    try
+                    {
+                        var pane = Globals.ThisAddIn.CustomTaskPanes.Add(new CustomTaskPaneForm(),
+                                                                         APP_NAME,
+                                                                         _window);
+                        pane.Width = PANE_INITIAL_WIDTH;
+                        pane.DockPosition = Office.MsoCTPDockPosition.msoCTPDockPositionRight;
+                        pane.DockPositionRestrict = Office.MsoCTPDockPositionRestrict.msoCTPDockPositionRestrictNoChange;
+                        PaneWrapper wrapper = new PaneWrapper(_window, pane);
+                    }
+                    catch (COMException) { }
+                    catch (ObjectDisposedException) { }
+                }
             }
+            else Debug.Assert(false);
         }
 
         public PaneWrapper GetPane(object _window)

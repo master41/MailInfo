@@ -2,15 +2,25 @@
 using Outlook = Microsoft.Office.Interop.Outlook;
 using Office = Microsoft.Office.Core;
 using System.Runtime.InteropServices;
+using System.Windows.Threading;
 
 namespace TimaivAddIn
 {
     public partial class ThisAddIn
     {
+        #region Private Members
         private Outlook.Explorers explorers;
+        #endregion
 
+        #region Property
+        internal Dispatcher UIDispatcher { get; set; }
+        #endregion
+
+        #region Private Methods
         private void ThisAddIn_Startup(object sender, EventArgs e)
         {
+            UIDispatcher = Dispatcher.CurrentDispatcher;
+
             explorers = Application.Explorers;
 
             new ExplorerWrapper(Application.ActiveExplorer());
@@ -62,6 +72,8 @@ namespace TimaivAddIn
             this.Startup += new EventHandler(ThisAddIn_Startup);
             this.Shutdown += new EventHandler(ThisAddIn_Shutdown);
         }
+        #endregion
+
         #endregion
     }
 }
