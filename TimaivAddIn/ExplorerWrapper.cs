@@ -7,6 +7,8 @@ namespace TimaivAddIn
     {
         #region Members
         private Outlook.Explorer explorer;
+        private MailWrapper mailWrapper;
+        private string mailEntryId;
         #endregion
 
         #region Constructor
@@ -17,7 +19,9 @@ namespace TimaivAddIn
             explorer = _explorer;
             AttachEvents();
         }
+        #endregion
 
+        #region Methods
         private void AttachEvents()
         {
             ((Outlook.ExplorerEvents_10_Event)explorer).SelectionChange += OnSelectionChange;
@@ -42,7 +46,14 @@ namespace TimaivAddIn
         {
             if (explorer.Selection.Count > 0 && explorer.Selection[1] is Outlook.MailItem mailItem)
             {
-                var headers = mailItem.GetHeaders();
+                if (mailEntryId != mailItem.EntryID)
+                {
+                    mailWrapper?.Dispose();
+
+                    mailEntryId = mailItem.EntryID;
+                    mailWrapper = new MailWrapper(mailItem, explorer);
+                }
+                //var headers = mailItem.GetHeaders();
             }
         }
         #endregion

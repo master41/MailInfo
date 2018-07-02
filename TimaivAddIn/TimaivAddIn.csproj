@@ -165,6 +165,7 @@
     can be found.
   -->
   <ItemGroup>
+    <Compile Include="AppInfo.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="CustomTaskPane\CustomTaskPaneForm.cs">
       <SubType>UserControl</SubType>
@@ -174,13 +175,15 @@
     </Compile>
     <Compile Include="CustomTaskPane\CustomTaskPaneManager.cs" />
     <Compile Include="CustomTaskPane\PaneWrapper.cs" />
+    <Compile Include="Enums\Enums.cs" />
     <Compile Include="ExplorerWrapper.cs" />
     <Compile Include="Helpers\ThreadHelper.cs" />
-    <Compile Include="InspectorWrapper.cs" />
+    <Compile Include="MailWrapper.cs" />
     <Compile Include="Utils\OutlookUtils.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Utils\ResourceUtils.cs" />
     <EmbeddedResource Include="CustomTaskPane\CustomTaskPaneForm.resx">
       <DependentUpon>CustomTaskPaneForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -219,7 +222,10 @@
     <EmbeddedResource Include="Ribbon\Ribbon1.xml" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Resources\EmbeddedLoc\" />
+    <Folder Include="Resources\Images\" />
     <Folder Include="Services\" />
+    <Folder Include="Styles\" />
     <Folder Include="UserControls\" />
     <Folder Include="ViewModels\" />
   </ItemGroup>
@@ -228,6 +234,9 @@
       <Project>{4ffc6db4-7598-4748-8499-40be71bef538}</Project>
       <Name>MVVM</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\Loc\en-US.xml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

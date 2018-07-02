@@ -1,8 +1,8 @@
 ﻿using System;
-using Outlook = Microsoft.Office.Interop.Outlook;
-using Office = Microsoft.Office.Core;
 using System.Runtime.InteropServices;
 using System.Windows.Threading;
+using Office = Microsoft.Office.Core;
+using Outlook = Microsoft.Office.Interop.Outlook;
 
 namespace TimaivAddIn
 {
@@ -10,10 +10,12 @@ namespace TimaivAddIn
     {
         #region Private Members
         private Outlook.Explorers explorers;
+        private Outlook.Inspectors inspectors;
         #endregion
 
         #region Property
         internal Dispatcher UIDispatcher { get; set; }
+        internal static AppInfo AppInfo { get; } = OutlookUtils.GetAppInfo();
         #endregion
 
         #region Private Methods
@@ -22,16 +24,26 @@ namespace TimaivAddIn
             UIDispatcher = Dispatcher.CurrentDispatcher;
 
             explorers = Application.Explorers;
+            inspectors = Application.Inspectors;
 
             new ExplorerWrapper(Application.ActiveExplorer());
 
             ((Outlook.ApplicationEvents_11_Event)Application).Quit += ThisAddIn_Quit;
             ((Outlook.ExplorersEvents_Event)explorers).NewExplorer += ThisAddIn_NewExplorer;
+            ((Outlook.InspectorsEvents_Event)inspectors).NewInspector += ThisAddIn_NewInspector;
         }
 
-        private void ThisAddIn_NewExplorer(Outlook.Explorer Explorer)
+        private void ThisAddIn_NewInspector(Outlook.Inspector _inspector)
         {
+            if (_inspector.CurrentItem is Outlook.MailItem mailItem)
+            {
+                new MailWrapper(mailItem, _inspector);
+            }
+        }
 
+        private void ThisAddIn_NewExplorer(Outlook.Explorer _explorer)
+        {
+            new ExplorerWrapper(_explorer);
         }
 
         private void ThisAddIn_Quit()
@@ -43,6 +55,18 @@ namespace TimaivAddIn
         {
             ((Outlook.ApplicationEvents_11_Event)Application).Quit -= ThisAddIn_Quit;
             ReleaseExplorers();
+            ReleaseInspectors();
+        }
+
+        private void ReleaseInspectors()
+        {
+            if (inspectors != null)
+            {
+                ((Outlook.InspectorsEvents_Event)inspectors).NewInspector -= ThisAddIn_NewInspector;
+
+                Marshal.ReleaseComObject(inspectors);
+                inspectors = null;
+            }
         }
 
         private void ReleaseExplorers()
