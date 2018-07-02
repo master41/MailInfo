@@ -178,8 +178,12 @@
     <Compile Include="Enums\Enums.cs" />
     <Compile Include="ExplorerWrapper.cs" />
     <Compile Include="Helpers\ThreadHelper.cs" />
+    <Compile Include="Interfaces\ILocalizable.cs" />
     <Compile Include="MailWrapper.cs" />
     <Compile Include="Ribbon\RibbonManager.cs" />
+    <Compile Include="UserControls\UserControlAbout.xaml.cs">
+      <DependentUpon>UserControlAbout.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Utils\DebugUtils.cs" />
     <Compile Include="Utils\OutlookUtils.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -230,7 +234,7 @@
     <Folder Include="Resources\Images\" />
     <Folder Include="Services\" />
     <Folder Include="Styles\" />
-    <Folder Include="UserControls\" />
+    <Folder Include="ViewModels\Entities\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MVVM\MVVM.csproj">
@@ -240,6 +244,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\Loc\en-US.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="UserControls\UserControlAbout.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

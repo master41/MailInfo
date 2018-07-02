@@ -248,8 +248,10 @@ namespace TimaivAddIn
 
         internal static AppInfo GetAppInfo()
         {
-            AppType appType = default(AppType);
+            AppType appType = AppType.UNDEFINED;
 
+            string version = Globals.ThisAddIn.Application.Version;
+                        
             return new AppInfo(appType);
         }
         #endregion

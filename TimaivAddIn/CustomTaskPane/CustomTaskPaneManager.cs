@@ -9,6 +9,8 @@ using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Windows.Controls;
 using MVVM;
+using static TimaivAddIn.Utils.DebugUtils;
+using TimaivAddIn.Interfaces;
 
 namespace TimaivAddIn.CustomTaskPane
 {
@@ -31,7 +33,7 @@ namespace TimaivAddIn.CustomTaskPane
         private Tools.CustomTaskPaneCollection CustomTaskPanes => Globals.ThisAddIn.CustomTaskPanes;
         #endregion
 
-        #region Public Methods
+        #region Methods
         private PaneWrapper CreatePane(object _window)
         {
             try
@@ -48,18 +50,41 @@ namespace TimaivAddIn.CustomTaskPane
             return null;
         }
 
-        public void InitPane<T>(object _window, Action<ViewModelBase> _callback = null) where T : UserControl
+        public void InitPane<T>(object _window,
+                                bool _createNew,
+                                out bool _isNew,
+                                Action<ViewModelBase> _callback = null) where T : UserControl
         {
             if (_window == null) throw new ArgumentNullException();
 
+            _isNew = false;
+
             if (_window is Outlook.Inspector || _window is Outlook.Explorer)
             {
-                if (GetPane(_window) == null)
+                ViewModelBase viewModel = null;
+                PaneWrapper wrapper = GetPane(_window);
+
+                if (wrapper == null || _createNew)
                 {
-                    CreatePane(_window);
+                    wrapper = CreatePane(_window);
+                    wrapper.ViewModel = GetViewModel<T>();
+                    _isNew = true;
+                    _callback?.Invoke(viewModel);
                 }
+
+                ShowPane(wrapper);
             }
-            else Debug.Assert(false);
+            else Stop();
+        }
+
+        private ViewModelBase GetViewModel<T>() where T : UserControl
+        {
+            return null;
+        }
+
+        public void InitPane<T>(object _window) where T : UserControl
+        {
+            InitPane<T>(_window, false, out bool _);
         }
 
         public PaneWrapper GetPane(object _window)
@@ -120,6 +145,14 @@ namespace TimaivAddIn.CustomTaskPane
             if (_wrapper == null) throw new ArgumentNullException();
 
             wrappers.Remove(_wrapper);
+        }
+
+        private void LocalizePanes()
+        {
+            foreach (var wrapper in wrappers)
+            {
+                if (wrapper.ViewModel is ILocalizable localizePane) localizePane.Localize();
+            }
         }
         #endregion
     }

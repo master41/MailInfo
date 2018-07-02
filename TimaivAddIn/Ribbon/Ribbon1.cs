@@ -40,7 +40,7 @@ namespace TimaivAddIn
         #endregion
 
         #region Methods
-
+        public void Invalidate() => ribbon.Invalidate();
         #endregion
     }
 }

@@ -4,13 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TimaivAddIn.Enums
+namespace TimaivAddIn.Interfaces
 {
-    enum AppType
+    internal interface ILocalizable
     {
-        UNDEFINED = 0,
-        _2010,
-        _2013,
-        _2016
+        void Localize();
     }
 }
