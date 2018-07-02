@@ -4,16 +4,19 @@ using System.Linq;
 using static TimaivAddIn.Constants;
 using Office = Microsoft.Office.Core;
 using Outlook = Microsoft.Office.Interop.Outlook;
+using Tools = Microsoft.Office.Tools;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
+using System.Windows.Controls;
+using MVVM;
 
 namespace TimaivAddIn.CustomTaskPane
 {
     class CustomTaskPaneManager
     {
         #region Lazy Singleton
-        private CustomTaskPaneManager instance;
-        internal CustomTaskPaneManager GetInstance() => instance ?? (instance = new CustomTaskPaneManager());
+        private static CustomTaskPaneManager instance;
+        internal static CustomTaskPaneManager GetInstance() => instance ?? (instance = new CustomTaskPaneManager());
         #endregion
 
         #region Consturctor
@@ -24,8 +27,28 @@ namespace TimaivAddIn.CustomTaskPane
         private readonly List<PaneWrapper> wrappers = new List<PaneWrapper>();
         #endregion
 
+        #region Property
+        private Tools.CustomTaskPaneCollection CustomTaskPanes => Globals.ThisAddIn.CustomTaskPanes;
+        #endregion
+
         #region Public Methods
-        public void InitPane(object _window)
+        private PaneWrapper CreatePane(object _window)
+        {
+            try
+            {
+                var pane = CustomTaskPanes.Add(new CustomTaskPaneForm(), APP_NAME, _window);
+                pane.Width = PANE_INITIAL_WIDTH;
+                pane.DockPosition = Office.MsoCTPDockPosition.msoCTPDockPositionRight;
+                pane.DockPositionRestrict = Office.MsoCTPDockPositionRestrict.msoCTPDockPositionRestrictNoChange;
+                return new PaneWrapper(_window, null, pane);
+            }
+            catch (COMException) { }
+            catch (ObjectDisposedException) { }
+
+            return null;
+        }
+
+        public void InitPane<T>(object _window, Action<ViewModelBase> _callback = null) where T : UserControl
         {
             if (_window == null) throw new ArgumentNullException();
 
@@ -33,18 +56,7 @@ namespace TimaivAddIn.CustomTaskPane
             {
                 if (GetPane(_window) == null)
                 {
-                    try
-                    {
-                        var pane = Globals.ThisAddIn.CustomTaskPanes.Add(new CustomTaskPaneForm(),
-                                                                         APP_NAME,
-                                                                         _window);
-                        pane.Width = PANE_INITIAL_WIDTH;
-                        pane.DockPosition = Office.MsoCTPDockPosition.msoCTPDockPositionRight;
-                        pane.DockPositionRestrict = Office.MsoCTPDockPositionRestrict.msoCTPDockPositionRestrictNoChange;
-                        PaneWrapper wrapper = new PaneWrapper(_window, pane);
-                    }
-                    catch (COMException) { }
-                    catch (ObjectDisposedException) { }
+                    CreatePane(_window);
                 }
             }
             else Debug.Assert(false);

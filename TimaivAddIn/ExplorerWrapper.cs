@@ -52,8 +52,8 @@ namespace TimaivAddIn
 
                     mailEntryId = mailItem.EntryID;
                     mailWrapper = new MailWrapper(mailItem, explorer);
+                    var headers = mailItem.GetHeaders();
                 }
-                //var headers = mailItem.GetHeaders();
             }
         }
         #endregion

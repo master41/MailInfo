@@ -179,11 +179,15 @@
     <Compile Include="ExplorerWrapper.cs" />
     <Compile Include="Helpers\ThreadHelper.cs" />
     <Compile Include="MailWrapper.cs" />
+    <Compile Include="Ribbon\RibbonManager.cs" />
+    <Compile Include="Utils\DebugUtils.cs" />
     <Compile Include="Utils\OutlookUtils.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Utils\ResourceUtils.cs" />
+    <Compile Include="ViewModels\ViewModelAbout\ViewModelAbout.cs" />
+    <Compile Include="ViewModels\ViewModelSettings\ViewModelSettings.cs" />
     <EmbeddedResource Include="CustomTaskPane\CustomTaskPaneForm.resx">
       <DependentUpon>CustomTaskPaneForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -227,7 +231,6 @@
     <Folder Include="Services\" />
     <Folder Include="Styles\" />
     <Folder Include="UserControls\" />
-    <Folder Include="ViewModels\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MVVM\MVVM.csproj">

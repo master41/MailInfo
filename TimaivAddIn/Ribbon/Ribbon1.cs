@@ -32,6 +32,11 @@ namespace TimaivAddIn
         {
             this.ribbon = ribbonUI;
         }
+
+        public void OnClick(Office.IRibbonControl control)
+        {
+            Globals.ThisAddIn.RibbonManager.OnClick(control.Id);
+        }
         #endregion
 
         #region Methods

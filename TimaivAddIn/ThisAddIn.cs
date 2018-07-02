@@ -1,6 +1,8 @@
-﻿using System;
+﻿using Microsoft.Office.Tools.Ribbon;
+using System;
 using System.Runtime.InteropServices;
 using System.Windows.Threading;
+using TimaivAddIn.Ribbon;
 using Office = Microsoft.Office.Core;
 using Outlook = Microsoft.Office.Interop.Outlook;
 
@@ -11,11 +13,14 @@ namespace TimaivAddIn
         #region Private Members
         private Outlook.Explorers explorers;
         private Outlook.Inspectors inspectors;
+        internal eRibbonManager ribbonManager = new eRibbonManager();
         #endregion
 
         #region Property
         internal Dispatcher UIDispatcher { get; set; }
         internal static AppInfo AppInfo { get; } = OutlookUtils.GetAppInfo();
+        internal eRibbonManager RibbonManager => ribbonManager;
+        internal Outlook.Explorer ActiveExplorer => Application.ActiveExplorer();
         #endregion
 
         #region Private Methods
