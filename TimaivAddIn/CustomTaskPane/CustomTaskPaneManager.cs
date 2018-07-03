@@ -11,6 +11,9 @@ using System.Windows.Controls;
 using MVVM;
 using static TimaivAddIn.Utils.DebugUtils;
 using TimaivAddIn.Interfaces;
+using TimaivAddIn.UserControls;
+using TimaivAddIn.ViewModels.ViewModelAbout;
+using TimaivAddIn.ViewModels.ViewModelSettings;
 
 namespace TimaivAddIn.CustomTaskPane
 {
@@ -53,33 +56,81 @@ namespace TimaivAddIn.CustomTaskPane
         public void InitPane<T>(object _window,
                                 bool _createNew,
                                 out bool _isNew,
-                                Action<ViewModelBase> _callback = null) where T : UserControl
+                                Action<ViewModelBase> _callback = null,
+                                int _id = 0) where T : UserControl
         {
             if (_window == null) throw new ArgumentNullException();
 
             _isNew = false;
 
-            if (_window is Outlook.Inspector || _window is Outlook.Explorer)
-            {
-                ViewModelBase viewModel = null;
-                PaneWrapper wrapper = GetPane(_window);
+            if (_window is Outlook.Inspector || _window is Outlook.Explorer) { }
+            else { Stop(); return; }
 
-                if (wrapper == null || _createNew)
+            ViewModelBase viewModel = null;
+            PaneWrapper wrapper = GetPane(_window);
+
+            if (!_createNew && wrapper != null && wrapper.ViewModel.GetType() == typeof(T) && cachedWrapper.Id == _id)
+            {
+                _isNew = false;
+            }
+            else
+            {
+                if (!_createNew)
+                {
+                    foreach (var cachedWrapper in wrappers)
+                    {
+                        if (cachedWrapper.ViewModel.GetType() == typeof(T) && cachedWrapper.Id == _id)
+                        {
+                            viewModel = cachedWrapper.ViewModel;
+                            _isNew = false;
+                            break;
+                        }
+                    }
+                }
+
+                if (wrapper == null)
                 {
                     wrapper = CreatePane(_window);
-                    wrapper.ViewModel = GetViewModel<T>();
+                }
+
+                if (viewModel == null)
+                {
+                    viewModel = GetViewModel<T>();
                     _isNew = true;
                     _callback?.Invoke(viewModel);
                 }
+                else
+                {
+                    wrapper.ViewModel = viewModel;
+                }                
 
-                ShowPane(wrapper);
+                UserControl uc = new UserControl()
+                {
+                    DataContext = viewModel
+                };
+
+                (wrapper.Pane.Control as CustomTaskPaneForm).ElementHost.Child = uc;
             }
-            else Stop();
+
+            ShowPane(wrapper);
         }
 
         private ViewModelBase GetViewModel<T>() where T : UserControl
         {
-            return null;
+            Type type = typeof(T);
+            ViewModelBase vm = null;
+
+            if (type == typeof(UserControlAbout))
+            {
+                vm = new ViewModelAbout();
+            }
+            else if (type == typeof(UserControlSettings))
+            {
+                vm = new ViewModelSettings();
+            }
+            else Stop();
+
+            return vm;
         }
 
         public void InitPane<T>(object _window) where T : UserControl
