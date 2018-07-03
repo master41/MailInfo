@@ -188,6 +188,7 @@
     </Compile>
     <Compile Include="UserControls\UserControlSettings.cs" />
     <Compile Include="Utils\DebugUtils.cs" />
+    <Compile Include="Utils\ListUtils.cs" />
     <Compile Include="Utils\OutlookUtils.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>

@@ -5,7 +5,6 @@ using static TimaivAddIn.Constants;
 using Office = Microsoft.Office.Core;
 using Outlook = Microsoft.Office.Interop.Outlook;
 using Tools = Microsoft.Office.Tools;
-using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Windows.Controls;
 using MVVM;

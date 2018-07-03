@@ -17,17 +17,25 @@ namespace TimaivAddIn
             if (_mailItem == null || window == null) return;
 
             window = _window;
+            mailItem = _mailItem;
+
             AttachEvents();
         }
 
         private void AttachEvents()
         {
-            ((Outlook.ItemEvents_10_Event)mailItem).Close += OnClose;
+            if (mailItem != null)
+            {
+                ((Outlook.ItemEvents_10_Event)mailItem).Close += OnClose;
+            }
         }
 
         private void DettachEvents()
         {
-            ((Outlook.ItemEvents_10_Event)mailItem).Close -= OnClose;
+            if (mailItem != null)
+            {
+                ((Outlook.ItemEvents_10_Event)mailItem).Close -= OnClose;
+            }
         }
 
         private void OnClose(ref bool Cancel)

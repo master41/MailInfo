@@ -3,9 +3,8 @@
   <ribbon>
     <tabs>
       <tab id="timaivTab" label="Timaiv Add-In">
-        <group id="MyGroup"
-               label="My Group">
-          <labelControl id="lol" label="lo"></labelControl>
+        <group id="MyGroup" getLabel="GetLabel">
+          <labelControl id="lol" getLabel="GetLabel"></labelControl>
         </group>
       </tab>
     </tabs>

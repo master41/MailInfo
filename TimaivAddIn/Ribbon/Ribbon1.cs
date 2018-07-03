@@ -1,7 +1,4 @@
-﻿using System;
-using System.IO;
-using System.Reflection;
-using System.Runtime.InteropServices;
+﻿using System.Runtime.InteropServices;
 using Office = Microsoft.Office.Core;
 using static TimaivAddIn.Utils.ResourceUtils;
 
@@ -36,6 +33,21 @@ namespace TimaivAddIn
         public void OnClick(Office.IRibbonControl control)
         {
             Globals.ThisAddIn.RibbonManager.OnClick(control.Id);
+        }
+
+        public string GetLabel(Office.IRibbonControl control)
+        {
+            return "fuck";
+        }
+
+        public string GetScreenTip(Office.IRibbonControl control)
+        {
+            return null;
+        }
+
+        public string GetSuperTip(Office.IRibbonControl control)
+        {
+            return null;
         }
         #endregion
 

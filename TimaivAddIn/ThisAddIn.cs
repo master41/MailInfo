@@ -1,5 +1,4 @@
-﻿using Microsoft.Office.Tools.Ribbon;
-using System;
+﻿using System;
 using System.Runtime.InteropServices;
 using System.Windows.Threading;
 using TimaivAddIn.Ribbon;
@@ -18,7 +17,7 @@ namespace TimaivAddIn
 
         #region Property
         internal Dispatcher UIDispatcher { get; set; }
-        internal static AppInfo AppInfo { get; } = OutlookUtils.GetAppInfo();
+        internal static AppInfo AppInfo { get; set; }
         internal eRibbonManager RibbonManager => ribbonManager;
         internal Outlook.Explorer ActiveExplorer => Application.ActiveExplorer();
         #endregion
@@ -27,6 +26,7 @@ namespace TimaivAddIn
         private void ThisAddIn_Startup(object sender, EventArgs e)
         {
             UIDispatcher = Dispatcher.CurrentDispatcher;
+            AppInfo = OutlookUtils.GetAppInfo();
 
             explorers = Application.Explorers;
             inspectors = Application.Inspectors;
