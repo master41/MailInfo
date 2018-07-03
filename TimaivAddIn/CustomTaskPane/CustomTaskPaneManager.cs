@@ -69,7 +69,7 @@ namespace TimaivAddIn.CustomTaskPane
             ViewModelBase viewModel = null;
             PaneWrapper wrapper = GetPane(_window);
 
-            if (!_createNew && wrapper != null && wrapper.ViewModel.GetType() == typeof(T) && cachedWrapper.Id == _id)
+            if (!_createNew && wrapper != null && wrapper.ViewModel.GetType() == typeof(T) && wrapper.Id == _id)
             {
                 _isNew = false;
             }

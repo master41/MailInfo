@@ -36,6 +36,8 @@ namespace TimaivAddIn
 
         private void OnClose()
         {
+            mailWrapper?.Dispose();
+
             DettachEvents();
 
             Marshal.ReleaseComObject(explorer);

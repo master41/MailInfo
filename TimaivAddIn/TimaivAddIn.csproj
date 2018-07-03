@@ -238,7 +238,6 @@
     <Folder Include="Resources\EmbeddedLoc\" />
     <Folder Include="Resources\Images\" />
     <Folder Include="Services\" />
-    <Folder Include="Styles\" />
     <Folder Include="ViewModels\Entities\" />
   </ItemGroup>
   <ItemGroup>
@@ -251,6 +250,10 @@
     <Content Include="Resources\Loc\en-US.xml" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Styles\BaseStyles.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="UserControls\UserControlAbout.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
