@@ -195,6 +195,7 @@
     </Compile>
     <Compile Include="Utils\ResourceUtils.cs" />
     <Compile Include="ViewModels\ViewModelAbout\ViewModelAbout.cs" />
+    <Compile Include="ViewModels\ViewModelMailInfo\ViewModelMailInfo.cs" />
     <Compile Include="ViewModels\ViewModelSettings\ViewModelSettings.cs" />
     <EmbeddedResource Include="CustomTaskPane\CustomTaskPaneForm.resx">
       <DependentUpon>CustomTaskPaneForm.cs</DependentUpon>

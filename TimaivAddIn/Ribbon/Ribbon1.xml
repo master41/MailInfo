@@ -3,8 +3,13 @@
   <ribbon>
     <tabs>
       <tab id="timaivTab" label="Timaiv Add-In">
-        <group id="MyGroup" getLabel="GetLabel">
-          <labelControl id="lol" getLabel="GetLabel"></labelControl>
+        <group id="groupFeatures" getLabel="GetLabel">
+          <button id="btnMailInfo" onAction="OnAction" size="large" getLabel="GetLabel" getScreentip="GetScreenTip" getSupertip="GetSuperTip" getImage="GetImage"/>
+          <button id="btnMailSetProperty" onAction="OnAction" size="large" getLabel="GetLabel" getScreentip="GetScreenTip" getSupertip="GetSuperTip" getImage="GetImage"/>
+        </group>
+        <group id="groupFeaturesSettings" getLabel="GetLabel">
+          <button id="btnSettings" onAction="OnAction" size="large" getLabel="GetLabel" getScreentip="GetScreenTip" getSupertip="GetSuperTip" getImage="GetImage"/>
+          <button id="btnAbout" onAction="OnAction" size="large" getLabel="GetLabel" getScreentip="GetScreenTip" getSupertip="GetSuperTip" getImage="GetImage"/>
         </group>
       </tab>
     </tabs>

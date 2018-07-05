@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Runtime.InteropServices;
+using System.Windows;
 using System.Windows.Threading;
 using TimaivAddIn.Ribbon;
 using Office = Microsoft.Office.Core;
@@ -92,6 +93,7 @@ namespace TimaivAddIn
 
         protected override Office.IRibbonExtensibility CreateRibbonExtensibilityObject()
         {
+            new FrameworkElement();//hook to start PackUriHelper
             return new Ribbon1();
         }
 

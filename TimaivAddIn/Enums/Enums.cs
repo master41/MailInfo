@@ -1,6 +1,6 @@
 ﻿namespace TimaivAddIn.Enums
 {
-    enum AppType
+    internal enum AppType
     {
         UNDEFINED = 0,
         _2007,

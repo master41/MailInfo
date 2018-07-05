@@ -44,7 +44,7 @@ namespace TimaivAddIn.CustomTaskPane
                 pane.Width = PANE_INITIAL_WIDTH;
                 pane.DockPosition = Office.MsoCTPDockPosition.msoCTPDockPositionRight;
                 pane.DockPositionRestrict = Office.MsoCTPDockPositionRestrict.msoCTPDockPositionRestrictNoChange;
-                return new PaneWrapper(_window, null, pane, id);
+                return new PaneWrapper(_window, null, pane, _id);
             }
             catch (COMException) { }
             catch (ObjectDisposedException) { }
@@ -115,7 +115,7 @@ namespace TimaivAddIn.CustomTaskPane
             {
                 vm = new ViewModelSettings();
             }
-            else Stop();
+            else DBG_Stop();
 
             return vm;
         }

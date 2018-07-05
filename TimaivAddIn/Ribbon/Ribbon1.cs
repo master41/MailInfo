@@ -1,6 +1,7 @@
 ﻿using System.Runtime.InteropServices;
 using Office = Microsoft.Office.Core;
 using static TimaivAddIn.Utils.ResourceUtils;
+using System.Drawing;
 
 namespace TimaivAddIn
 {
@@ -30,7 +31,7 @@ namespace TimaivAddIn
             this.ribbon = ribbonUI;
         }
 
-        public void OnClick(Office.IRibbonControl control)
+        public void OnAction(Office.IRibbonControl control)
         {
             Globals.ThisAddIn.RibbonManager.OnClick(control.Id);
         }
@@ -38,6 +39,11 @@ namespace TimaivAddIn
         public string GetLabel(Office.IRibbonControl control)
         {
             return "fuck";
+        }
+
+        public Bitmap GetImage(Office.IRibbonControl control)
+        {
+            return null;
         }
 
         public string GetScreenTip(Office.IRibbonControl control)

@@ -4,14 +4,14 @@ namespace TimaivAddIn.Utils
 {
     static class DebugUtils
     {
-        internal static void Assert(bool _value)
+        internal static void DBG_Assert(bool _value)
         {
             Debug.Assert(_value);
         }
 
-        internal static void Stop()
+        internal static void DBG_Stop()
         {
-            Assert(false);
+            DBG_Assert(false);
         }
     }
 }

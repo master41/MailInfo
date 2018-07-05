@@ -14,19 +14,20 @@ namespace TimaivAddIn.Ribbon
             switch (_id)
             {
                 default:
-                    Stop();
+                    DBG_Stop();
                     break;
                 case "btnAbout":
                     ShowAboutPane(); break;
+                case "btnSettings":
+                    ShowSettingsPane(); break;
             }
         }
 
-        internal void ShowAboutPane()
-        {
-            ShowPane<UserControlAbout>();
-        }
+        internal void ShowAboutPane() => ShowPane<UserControlAbout>();
 
-        private void ShowPane<T>() where T : UserControl
+        internal void ShowSettingsPane() => ShowPane<UserControlSettings>();
+
+        private void ShowPane<T>() where T : UserControl, new()
         {
             CustomTaskPaneManager.GetInstance().InitPane<T>(Globals.ThisAddIn.ActiveExplorer);
         }
