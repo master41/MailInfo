@@ -28,7 +28,7 @@ namespace TimaivAddIn.CustomTaskPane
         #endregion
 
         #region Private Members
-        private readonly List<PaneWrapper> wrappers = new List<PaneWrapper>();
+        private readonly List<PaneWrapper> panes = new List<PaneWrapper>();
         #endregion
 
         #region Property
@@ -36,7 +36,7 @@ namespace TimaivAddIn.CustomTaskPane
         #endregion
 
         #region Methods
-        private PaneWrapper CreatePane(object _window)
+        private PaneWrapper CreatePane(object _window, int _id)
         {
             try
             {
@@ -44,7 +44,7 @@ namespace TimaivAddIn.CustomTaskPane
                 pane.Width = PANE_INITIAL_WIDTH;
                 pane.DockPosition = Office.MsoCTPDockPosition.msoCTPDockPositionRight;
                 pane.DockPositionRestrict = Office.MsoCTPDockPositionRestrict.msoCTPDockPositionRestrictNoChange;
-                return new PaneWrapper(_window, null, pane);
+                return new PaneWrapper(_window, null, pane, id);
             }
             catch (COMException) { }
             catch (ObjectDisposedException) { }
@@ -52,69 +52,57 @@ namespace TimaivAddIn.CustomTaskPane
             return null;
         }
 
-        public void InitPane<T>(object _window,
-                                bool _createNew,
-                                out bool _isNew,
-                                Action<ViewModelBase> _callback = null,
-                                int _id = 0) where T : UserControl
+        public PaneWrapper InitPane<T>(object _window,
+                                       bool _createNew,
+                                       out bool _isNew,
+                                       Action<ViewModelBase> _callback = null,
+                                       int _id = 0) where T : UserControl, new()
         {
             if (_window == null) throw new ArgumentNullException();
 
-            _isNew = false;
 
-            if (_window is Outlook.Inspector || _window is Outlook.Explorer) { }
-            else { Stop(); return; }
-
-            ViewModelBase viewModel = null;
+            bool isPaneIsNew = false;
             PaneWrapper wrapper = GetPane(_window);
 
-            if (!_createNew && wrapper != null && wrapper.ViewModel.GetType() == typeof(T) && wrapper.Id == _id)
+            if (!_createNew && wrapper != null && (wrapper.Pane.Control as CustomTaskPaneForm).ElementHost.Child.GetType() == typeof(T) && wrapper.Id == _id)
             {
+                _isNew = false;
+                return wrapper;
+            }
+            else
+            {
+                wrapper = CreatePane(_window, _id);
+                isPaneIsNew = true;
+            }
+
+            var paneWrapperCached = _createNew ? null : panes.FirstOrDefault(i => (i.Pane.Control as CustomTaskPaneForm).ElementHost.Child.GetType() == typeof(T) && i.Id == _id);
+
+            if (paneWrapperCached != null)
+            {
+                wrapper.ViewModel = paneWrapperCached.ViewModel;
                 _isNew = false;
             }
             else
             {
-                if (!_createNew)
-                {
-                    foreach (var cachedWrapper in wrappers)
-                    {
-                        if (cachedWrapper.ViewModel.GetType() == typeof(T) && cachedWrapper.Id == _id)
-                        {
-                            viewModel = cachedWrapper.ViewModel;
-                            _isNew = false;
-                            break;
-                        }
-                    }
-                }
-
-                if (wrapper == null)
-                {
-                    wrapper = CreatePane(_window);
-                }
-
-                if (viewModel == null)
-                {
-                    viewModel = GetViewModel<T>();
-                    _isNew = true;
-                    _callback?.Invoke(viewModel);
-                }
-                else
-                {
-                    wrapper.ViewModel = viewModel;
-                }                
-
-                UserControl uc = new UserControl()
-                {
-                    DataContext = viewModel
-                };
-
-                (wrapper.Pane.Control as CustomTaskPaneForm).ElementHost.Child = uc;
+                _isNew = true;
+                wrapper.ViewModel = CreateViewModel<T>();
+                _callback?.Invoke(wrapper.ViewModel);
             }
 
-            ShowPane(wrapper);
+            UserControl uc = new T()
+            {
+                DataContext = wrapper.ViewModel
+            };
+
+            (wrapper.Pane.Control as CustomTaskPaneForm).ElementHost.Child = uc;
+
+            if (isPaneIsNew)
+                panes.Add(wrapper);
+
+            return wrapper;
         }
 
-        private ViewModelBase GetViewModel<T>() where T : UserControl
+        private ViewModelBase CreateViewModel<T>() where T : UserControl
         {
             Type type = typeof(T);
             ViewModelBase vm = null;
@@ -132,7 +120,7 @@ namespace TimaivAddIn.CustomTaskPane
             return vm;
         }
 
-        public void InitPane<T>(object _window) where T : UserControl
+        public void InitPane<T>(object _window) where T : UserControl, new()
         {
             InitPane<T>(_window, false, out bool _);
         }
@@ -141,7 +129,7 @@ namespace TimaivAddIn.CustomTaskPane
         {
             if (_window == null) throw new ArgumentNullException();
 
-            return wrappers.FirstOrDefault(i => i.Window == _window);
+            return panes.FirstOrDefault(i => i.Window == _window);
         }
 
         public void ShowPane(object _window)
@@ -194,12 +182,12 @@ namespace TimaivAddIn.CustomTaskPane
         {
             if (_wrapper == null) throw new ArgumentNullException();
 
-            wrappers.Remove(_wrapper);
+            panes.Remove(_wrapper);
         }
 
         private void LocalizePanes()
         {
-            foreach (var wrapper in wrappers)
+            foreach (var wrapper in panes)
             {
                 if (wrapper.ViewModel is ILocalizable localizePane) localizePane.Localize();
             }
