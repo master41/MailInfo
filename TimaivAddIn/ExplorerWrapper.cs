@@ -1,5 +1,6 @@
 ﻿using Outlook = Microsoft.Office.Interop.Outlook;
 using System.Runtime.InteropServices;
+using TimaivAddIn.CustomTaskPane;
 
 namespace TimaivAddIn
 {
@@ -54,9 +55,12 @@ namespace TimaivAddIn
 
                     mailEntryId = mailItem.EntryID;
                     mailWrapper = new MailWrapper(mailItem, explorer);
-                    var headers = mailItem.GetHeaders();
+                    //var headers = mailItem.GetHeaders();
+                    return;
                 }
             }
+
+            CustomTaskPaneManager.GetInstance().RemovePane(explorer);
         }
         #endregion
     }

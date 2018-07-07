@@ -183,6 +183,11 @@ namespace TimaivAddIn.CustomTaskPane
             if (_wrapper == null) throw new ArgumentNullException();
 
             panes.Remove(_wrapper);
+
+            if (Marshal.IsComObject(_wrapper.Window))
+            {
+                Marshal.ReleaseComObject(_wrapper.Window);
+            }
         }
 
         private void LocalizePanes()

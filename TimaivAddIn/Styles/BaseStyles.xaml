@@ -2,19 +2,95 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:TimaivAddIn">
 
-    <Thickness x:Key="MarginLow">0,2,0,0</Thickness>
+    <!--Constants-->
+    <Thickness x:Key="MarginSmall">0,2,0,0</Thickness>
     <Thickness x:Key="MarginMiddle">0,4,0,0</Thickness>
     <Thickness x:Key="MarginBig">0,8,0,0</Thickness>
     <Thickness x:Key="MarginHuge">0,16,0,0</Thickness>
     <Thickness x:Key="MarginHuge+">0,24,0,0</Thickness>
 
+    <SolidColorBrush x:Key="DefaultButtonBackgroundNormal" Color="#C0C0C0"/>
+    <SolidColorBrush x:Key="DefaultButtonBorderBrushNormal" Color="#7F7F7F"/>
+    <!--Constants END-->
+
+    <!--TextBlocks-->
     <Style x:Key="PrimaryText" TargetType="{x:Type TextBlock}">
         <Setter Property="FontFamily" Value="Segoi UI"/>
         <Setter Property="FontSize" Value="14"/>
     </Style>
 
     <Style x:Key="PrimaryTextLocalizable" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource PrimaryText}">
-        
+
     </Style>
+    <!--TextBlocks END-->
+
+    <!--Buttons-->
+    <Style x:Key="ButtonDefault" TargetType="{x:Type Button}">
+        <Setter Property="UseLayoutRounding" Value="true" />
+        <Setter Property="OverridesDefaultStyle" Value="true" />
+        <Setter Property="BorderBrush" Value="{StaticResource DefaultButtonBorderBrushNormal}" />
+        <Setter Property="Background" Value="{StaticResource DefaultButtonColorNormal}" />
+        <Setter Property="MinHeight" Value="23" />
+        <Setter Property="MinWidth" Value="75" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border 
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        Background="{TemplateBinding Background}"
+                        TextBlock.Foreground="{TemplateBinding Foreground}"
+                        BorderThickness="1">
+                        <ContentPresenter 
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            RecognizesAccessKey="True" />
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="ButtonDefaultLocalizable" BasedOn="{StaticResource ButtonDefault}" TargetType="{x:Type Button}">
+
+    </Style>
+    <!--Buttons END-->
+
+    <!--Scrollviewer-->
+    <Style x:Key="ScrolviewerDefault" TargetType="{x:Type ScrollViewer}">
+        <Setter Property="OverridesDefaultStyle" Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ScrollViewer}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Border Grid.Column="1" BorderThickness="0" BorderBrush="Transparent">
+                            <ScrollContentPresenter />
+                        </Border>
+                        <ScrollBar x:Name="PART_VerticalScrollBar"
+                                   Value="{TemplateBinding VerticalOffset}"
+                                   Maximum="{TemplateBinding ScrollableHeight}"
+                                   ViewportSize="{TemplateBinding ViewportHeight}"
+                                   Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}"/>
+                        <ScrollBar x:Name="PART_HorizontalScrollBar"
+                                   Orientation="Horizontal"
+                                   Grid.Row="1"
+                                   Grid.Column="1"
+                                   Value="{TemplateBinding HorizontalOffset}"
+                                   Maximum="{TemplateBinding ScrollableWidth}"
+                                   ViewportSize="{TemplateBinding ViewportWidth}"
+                                   Visibility="{TemplateBinding ComputedHorizontalScrollBarVisibility}"/>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <!--Scrollviewer END-->
 
 </ResourceDictionary>
