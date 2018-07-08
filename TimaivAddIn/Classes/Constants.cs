@@ -1,4 +1,4 @@
-﻿namespace TimaivAddIn
+﻿namespace TimaivAddIn.Constants
 {
     static class Constants
     {

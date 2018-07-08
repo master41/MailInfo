@@ -170,6 +170,7 @@
     <Compile Include="Attributes\KeyAttribute.cs" />
     <Compile Include="Classes\Constants.cs" />
     <Compile Include="Converters\LocalizeConverter.cs" />
+    <Compile Include="CustomControls\HyperLinkEx.cs" />
     <Compile Include="CustomTaskPane\CustomTaskPaneForm.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -240,12 +241,15 @@
     <EmbeddedResource Include="Ribbon\Ribbon1.xml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="CustomControls\" />
     <Folder Include="Resources\Images\" />
     <Folder Include="Services\" />
     <Folder Include="ViewModels\Entities\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Localizator\Localizator.csproj">
+      <Project>{810cac39-bbbb-4c90-b44f-493116a95300}</Project>
+      <Name>Localizator</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MVVM\MVVM.csproj">
       <Project>{4ffc6db4-7598-4748-8499-40be71bef538}</Project>
       <Name>MVVM</Name>

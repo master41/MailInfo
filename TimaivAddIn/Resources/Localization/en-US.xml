@@ -1,2 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<string id="lol">LOL</string>
+<resources>
+  <string id="ribbon_btnAbout_label">About</string>
+  <string id="ribbon_btnAbout_screentip">About</string>
+  <string id="ribbon_btnAbout_supertip">About</string>
+  <string id="pane_about_title">About</string>
+</resources>

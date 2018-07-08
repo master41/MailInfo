@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System;
 using System.Linq;
-using static TimaivAddIn.Constants;
+using static TimaivAddIn.Constants.Constants;
 using Office = Microsoft.Office.Core;
 using Outlook = Microsoft.Office.Interop.Outlook;
 using Tools = Microsoft.Office.Tools;
