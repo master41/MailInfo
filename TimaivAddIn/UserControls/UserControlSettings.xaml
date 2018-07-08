@@ -6,7 +6,8 @@
         <ResourceDictionary Source="pack://application:,,,/TimaivAddIn;component/Styles/SettingsStyles.xaml"/>
     </UserControl.Resources>
 
-    <Grid>
+    <ContentControl Style="{StaticResource PaneLeftWrapper}">
+        <TextBlock Style="{StaticResource PrimaryText}" Text="Settings" FontSize="36" Margin="0,0,0,0"/>
 
-    </Grid>
+    </ContentControl>
 </UserControl>

@@ -60,7 +60,6 @@ namespace TimaivAddIn.CustomTaskPane
         {
             if (_window == null) throw new ArgumentNullException();
 
-
             bool isPaneIsNew = false;
             PaneWrapper wrapper = GetPane(_window);
 
@@ -75,7 +74,7 @@ namespace TimaivAddIn.CustomTaskPane
                 isPaneIsNew = true;
             }
 
-            var paneWrapperCached = _createNew ? null : panes.FirstOrDefault(i => (i.Pane.Control as CustomTaskPaneForm).ElementHost.Child.GetType() == typeof(T) && i.Id == _id);
+            var paneWrapperCached = _createNew ? null : GetPane<T>(_id);
 
             if (paneWrapperCached != null)
             {
@@ -120,9 +119,9 @@ namespace TimaivAddIn.CustomTaskPane
             return vm;
         }
 
-        public void InitPane<T>(object _window) where T : UserControl, new()
+        public PaneWrapper InitPane<T>(object _window) where T : UserControl, new()
         {
-            InitPane<T>(_window, false, out bool _);
+            return InitPane<T>(_window, false, out bool _);
         }
 
         public PaneWrapper GetPane(object _window)
@@ -130,6 +129,12 @@ namespace TimaivAddIn.CustomTaskPane
             if (_window == null) throw new ArgumentNullException();
 
             return panes.FirstOrDefault(i => i.Window == _window);
+        }
+
+        public PaneWrapper GetPane<T>(int _id = 0) where T : UserControl
+        {
+            return panes.FirstOrDefault(i => (i.Pane.Control as CustomTaskPaneForm).ElementHost.Child.GetType() == typeof(T)
+                                           && i.Id == _id);
         }
 
         public void ShowPane(object _window)

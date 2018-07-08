@@ -166,9 +166,10 @@
     can be found.
   -->
   <ItemGroup>
-    <Compile Include="AppInfo.cs" />
+    <Compile Include="Classes\AppInfo.cs" />
     <Compile Include="Attributes\KeyAttribute.cs" />
-    <Compile Include="Constants.cs" />
+    <Compile Include="Classes\Constants.cs" />
+    <Compile Include="Converters\LocalizeConverter.cs" />
     <Compile Include="CustomTaskPane\CustomTaskPaneForm.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -178,15 +179,17 @@
     <Compile Include="CustomTaskPane\CustomTaskPaneManager.cs" />
     <Compile Include="CustomTaskPane\PaneWrapper.cs" />
     <Compile Include="Enums\Enums.cs" />
-    <Compile Include="ExplorerWrapper.cs" />
+    <Compile Include="OutlookWrappers\ExplorerWrapper.cs" />
     <Compile Include="Helpers\ThreadHelper.cs" />
+    <Compile Include="Interfaces\IClearable.cs" />
     <Compile Include="Interfaces\ILocalizable.cs" />
-    <Compile Include="MailWrapper.cs" />
+    <Compile Include="OutlookWrappers\MailWrapper.cs" />
     <Compile Include="Ribbon\RibbonManager.cs" />
     <Compile Include="UserControls\UserControlAbout.xaml.cs">
       <DependentUpon>UserControlAbout.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserControls\UserControlSettings.cs" />
+    <Compile Include="Utils\CommonExtensions.cs" />
     <Compile Include="Utils\DebugUtils.cs" />
     <Compile Include="Utils\ListUtils.cs" />
     <Compile Include="Utils\OutlookUtils.cs" />
@@ -237,7 +240,7 @@
     <EmbeddedResource Include="Ribbon\Ribbon1.xml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Resources\EmbeddedLoc\" />
+    <Folder Include="CustomControls\" />
     <Folder Include="Resources\Images\" />
     <Folder Include="Services\" />
     <Folder Include="ViewModels\Entities\" />
@@ -249,7 +252,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Resources\Loc\en-US.xml" />
+    <EmbeddedResource Include="Resources\Localization\en-US.xml" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="Styles\AboutStyles.xaml">

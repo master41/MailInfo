@@ -1,6 +1,7 @@
 ﻿using System.Windows.Controls;
 using TimaivAddIn.CustomTaskPane;
 using TimaivAddIn.UserControls;
+using TimaivAddIn.Utils;
 using static TimaivAddIn.Utils.DebugUtils;
 
 namespace TimaivAddIn.Ribbon
@@ -27,9 +28,11 @@ namespace TimaivAddIn.Ribbon
 
         internal void ShowSettingsPane() => ShowPane<UserControlSettings>();
 
+        internal CustomTaskPaneManager PaneManager => CustomTaskPaneManager.GetInstance();
+
         private void ShowPane<T>() where T : UserControl, new()
         {
-            CustomTaskPaneManager.GetInstance().InitPane<T>(Globals.ThisAddIn.ActiveExplorer);
+            PaneManager.InitPane<T>(Globals.ThisAddIn.ActiveExplorer).Show();
         }
     }
 }

@@ -2,7 +2,7 @@
 
 namespace TimaivAddIn
 {
-    class AppInfo
+    struct AppInfo
     {
         internal AppInfo(AppType _appType)
         {

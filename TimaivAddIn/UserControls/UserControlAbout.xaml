@@ -6,7 +6,16 @@
         <ResourceDictionary Source="pack://application:,,,/TimaivAddIn;component/Styles/AboutStyles.xaml"/>
     </UserControl.Resources>
 
-    <Grid>
-
-    </Grid>
+    <ScrollViewer Style="{StaticResource ScrollviewerDefault}">
+        <StackPanel Margin="8">
+            <TextBlock Style="{StaticResource PrimaryText}" Text="About" FontSize="36" Margin="0,0,0,0"/>
+            <TextBlock Style="{StaticResource PrimaryText}" Margin="{StaticResource MarginBig}" Text="MailInfo v2.0" FontSize="16"/>
+            <TextBlock Style="{StaticResource PrimaryText}" Text="Lorem Ipsum - это текст-рыба, часто используемый в печати и вэб-дизайне. Lorem Ipsum является стандартной рыбой для текстов на латинице с начала XVI века. В то время некий безымянный печатник создал большую коллекцию размеров и форм шрифтов, используя Lorem Ipsum для распечатки образцов. Lorem Ipsum не только успешно пережил без заметных изменений " Margin="0,31,0,0"/>
+            <TextBlock Style="{StaticResource PrimaryText}" Margin="{StaticResource MarginHuge}" Text="Related links" FontSize="18"/>
+            <TextBlock Style="{StaticResource PrimaryText}" Text="https://ru.lipsum.com/" Margin="{StaticResource MarginBig}"/>
+            <TextBlock Style="{StaticResource PrimaryText}" Text="https://ru.lipsum.com/" Margin="{StaticResource MarginBig}"/>
+            <TextBlock Style="{StaticResource PrimaryText}" Margin="{StaticResource MarginHuge}" Text="Donats" FontSize="18"/>
+            <Button Margin="{StaticResource MarginHuge}" Content="DONAT" Background="#2B8AE1" HorizontalAlignment="Left" Style="{StaticResource ButtonDefault}" Foreground="White"/>
+        </StackPanel>
+    </ScrollViewer>
 </UserControl>

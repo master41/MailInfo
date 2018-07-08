@@ -16,7 +16,8 @@
     <!--TextBlocks-->
     <Style x:Key="PrimaryText" TargetType="{x:Type TextBlock}">
         <Setter Property="FontFamily" Value="Segoi UI"/>
-        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="TextWrapping" Value="Wrap"/>
+        <Setter Property="FontSize" Value="12"/>
     </Style>
 
     <Style x:Key="PrimaryTextLocalizable" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource PrimaryText}">
@@ -30,16 +31,15 @@
         <Setter Property="OverridesDefaultStyle" Value="true" />
         <Setter Property="BorderBrush" Value="{StaticResource DefaultButtonBorderBrushNormal}" />
         <Setter Property="Background" Value="{StaticResource DefaultButtonColorNormal}" />
-        <Setter Property="MinHeight" Value="23" />
+        <Setter Property="MinHeight" Value="28" />
         <Setter Property="MinWidth" Value="75" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
                     <Border 
-                        BorderBrush="{TemplateBinding BorderBrush}"
                         Background="{TemplateBinding Background}"
                         TextBlock.Foreground="{TemplateBinding Foreground}"
-                        BorderThickness="1">
+                        BorderThickness="0">
                         <ContentPresenter 
                             HorizontalAlignment="Center"
                             VerticalAlignment="Center"
@@ -56,41 +56,49 @@
     <!--Buttons END-->
 
     <!--Scrollviewer-->
-    <Style x:Key="ScrolviewerDefault" TargetType="{x:Type ScrollViewer}">
+    <Style x:Key="VerticalScrollBarDefault" TargetType="{x:Type ScrollBar}">
+
+    </Style>
+
+    <Style x:Key="ScrollviewerDefault" TargetType="{x:Type ScrollViewer}">
         <Setter Property="OverridesDefaultStyle" Value="True" />
+        <Setter Property="VerticalScrollBarVisibility" Value="Auto" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ScrollViewer}">
-                    <Grid>
+                    <Grid x:Name="Grid" Background="{TemplateBinding Background}">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition />
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
-                            <RowDefinition />
-                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
-                        <Border Grid.Column="1" BorderThickness="0" BorderBrush="Transparent">
-                            <ScrollContentPresenter />
-                        </Border>
-                        <ScrollBar x:Name="PART_VerticalScrollBar"
-                                   Value="{TemplateBinding VerticalOffset}"
-                                   Maximum="{TemplateBinding ScrollableHeight}"
-                                   ViewportSize="{TemplateBinding ViewportHeight}"
-                                   Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}"/>
-                        <ScrollBar x:Name="PART_HorizontalScrollBar"
-                                   Orientation="Horizontal"
-                                   Grid.Row="1"
-                                   Grid.Column="1"
-                                   Value="{TemplateBinding HorizontalOffset}"
-                                   Maximum="{TemplateBinding ScrollableWidth}"
-                                   ViewportSize="{TemplateBinding ViewportWidth}"
-                                   Visibility="{TemplateBinding ComputedHorizontalScrollBarVisibility}"/>
+                        <Rectangle x:Name="Corner" Grid.Column="1" Fill="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" Grid.Row="1"/>
+                        <ScrollContentPresenter x:Name="PART_ScrollContentPresenter" CanContentScroll="{TemplateBinding CanContentScroll}" CanHorizontallyScroll="False" CanVerticallyScroll="False" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" Grid.Column="0" Margin="{TemplateBinding Padding}" Grid.Row="0"/>
+                        <ScrollBar x:Name="PART_VerticalScrollBar" AutomationProperties.AutomationId="VerticalScrollBar" Cursor="Arrow" Grid.Column="1" Maximum="{TemplateBinding ScrollableHeight}" Minimum="0" Grid.Row="0" Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}" Value="{Binding VerticalOffset, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" ViewportSize="{TemplateBinding ViewportHeight}"/>
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
     </Style>
     <!--Scrollviewer END-->
+
+    <!--Pane wrapper-->
+    <Style x:Key="PaneLeftWrapper" TargetType="{x:Type ContentControl}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Grid Width="{Binding Parent.ActualWidth}" HorizontalAlignment="Left" MaxWidth="176">
+                        <ScrollViewer Style="{StaticResource ScrollviewerDefault}">
+                            <ContentPresenter Margin="8"/>
+                        </ScrollViewer>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <!--Pane wrapper END-->
 
 </ResourceDictionary>
