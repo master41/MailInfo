@@ -18,14 +18,11 @@ namespace TimaivAddIn.Models
 
         internal MailItemInfo GetInfo()
         {
-            MailItemInfo info = new MailItemInfo
-            {
+            return new MailItemInfo {
                 // ...
 
                 HeadersInfo = ParseHeaders(Source.GetHeaders())
             };
-
-            return info;
         }
 
         internal MailItemHeadersInfo ParseHeaders(string messageHeaders)
