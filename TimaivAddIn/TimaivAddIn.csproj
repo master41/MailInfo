@@ -180,6 +180,9 @@
     <Compile Include="CustomTaskPane\CustomTaskPaneManager.cs" />
     <Compile Include="CustomTaskPane\PaneWrapper.cs" />
     <Compile Include="Enums\Enums.cs" />
+    <Compile Include="Models\InfoProvider.cs" />
+    <Compile Include="Models\MailItemHeadersInfo.cs" />
+    <Compile Include="Models\MailItemInfo.cs" />
     <Compile Include="OutlookWrappers\ExplorerWrapper.cs" />
     <Compile Include="Helpers\ThreadHelper.cs" />
     <Compile Include="Interfaces\IClearable.cs" />
