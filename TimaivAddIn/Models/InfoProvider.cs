@@ -21,11 +21,11 @@ namespace TimaivAddIn.Models
             return new MailItemInfo {
                 // ...
 
-                HeadersInfo = ParseHeaders(Source.GetHeaders())
+                HeadersInfo = ParseHeaders()
             };
         }
 
-        internal MailItemHeadersInfo ParseHeaders(string messageHeaders)
+        internal MailItemHeadersInfo ParseHeaders()
         {
             // ...
 
